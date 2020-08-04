@@ -22,8 +22,9 @@
 #endif
 
 #import <CommonCrypto/CommonDigest.h>
+#if !TARGET_OS_OSX && !TARGET_OS_UIKITFORMAC
 #import <Photos/Photos.h>
-
+#endif
 
 @interface RNFSManager()
 
@@ -747,7 +748,7 @@ RCT_EXPORT_METHOD(getFSInfo:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromise
 
 
 // [PHAsset fetchAssetsWithALAssetURLs] is deprecated and not supported in Mac Catalyst
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_OSX && !TARGET_OS_UIKITFORMAC
 /**
  * iOS Only: copy images from the assets-library (camera-roll) to a specific path, asuming
  * JPEG-Images.
@@ -777,6 +778,8 @@ RCT_EXPORT_METHOD(copyAssetsFileIOS: (NSString *) imageUri
     CGSize size = CGSizeMake(width, height);
 
     NSURL* url = [NSURL URLWithString:imageUri];
+    #if !TARGET_OS_OSX && !TARGET_OS_UIKITFORMAC
+
     PHFetchResult *results = nil;
     if ([url.scheme isEqualToString:@"ph"]) {
         results = [PHAsset fetchAssetsWithLocalIdentifiers:@[[imageUri substringFromIndex: 5]] options:nil];
@@ -840,11 +843,12 @@ RCT_EXPORT_METHOD(copyAssetsFileIOS: (NSString *) imageUri
 
         }
     }];
+    #endif
 }
 #endif
 
 // [PHAsset fetchAssetsWithALAssetURLs] is deprecated and not supported in Mac Catalyst
-#if !TARGET_OS_UIKITFORMAC
+#if !TARGET_OS_OSX && !TARGET_OS_UIKITFORMAC
 /**
  * iOS Only: copy videos from the assets-library (camera-roll) to a specific path as mp4-file.
  *
@@ -968,10 +972,6 @@ RCT_EXPORT_METHOD(touch:(NSString*)filepath
            @"RNFSLibraryDirectoryPath": [self getPathForDirectory:NSLibraryDirectory],
            @"RNFSFileTypeRegular": NSFileTypeRegular,
            @"RNFSFileTypeDirectory": NSFileTypeDirectory,
-           @"RNFSFileProtectionComplete": NSFileProtectionComplete,
-           @"RNFSFileProtectionCompleteUnlessOpen": NSFileProtectionCompleteUnlessOpen,
-           @"RNFSFileProtectionCompleteUntilFirstUserAuthentication": NSFileProtectionCompleteUntilFirstUserAuthentication,
-           @"RNFSFileProtectionNone": NSFileProtectionNone
           };
 }
 

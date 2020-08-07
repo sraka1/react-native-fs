@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:itinance/react-native-fs.git"
+    "url": "git@github.com:eldh/react-native-fs.git"
   },
   "keywords": [
     "react-component",
@@ -23,7 +23,7 @@
     "upload",
     "file-transfer"
   ],
-  "author": "Johannes Lumpe <johannes@lum.pe> (https://github.com/johanneslumpe)",
+  "author": "andreas.eldh@gmail.com",
   "license": "MIT",
   "dependencies": {
     "base-64": "^0.1.0",
